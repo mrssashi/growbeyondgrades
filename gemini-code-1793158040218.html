@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grow Beyond Grades | An Ai Tong School SLC-CMPS Initiative</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- QRCode.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Fredoka', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              navy: '#1e293b',
+              accent: '#3b82f6',
+              purple: '#8b5cf6',
+              amber: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 font-body text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo / Brand -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white font-heading text-xl font-bold shadow-md shadow-brand-500/20">
+            🌱
+          </div>
+          <div>
+            <h1 class="font-heading font-bold text-lg text-slate-900 leading-tight">Grow Beyond Grades</h1>
+            <p class="text-xs text-brand-600 font-semibold">An Ai Tong School SLC-CMPS Initiative</p>
+          </div>
+        </div>
+
+        <!-- Desktop Action Buttons -->
+        <div class="flex items-center space-x-3">
+          <button onclick="openLinkModal()" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs sm:text-sm transition-all border border-slate-200">
+            <i class="fa-solid fa-link text-brand-600"></i>
+            <span>Update Links</span>
+          </button>
+          <button onclick="openQrModal()" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-medium text-xs sm:text-sm transition-all shadow-sm">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>Promo QR Code</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="lg:col-span-3 space-y-6">
+      <nav class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-1">
+        <div class="px-3 py-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Navigation</div>
+        
+        <button onclick="switchTab('home')" id="nav-home" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all bg-brand-50 text-brand-700">
+          <i class="fa-solid fa-compass w-5 text-center"></i>
+          <span>Home Overview</span>
+        </button>
+
+        <button onclick="switchTab('moe')" id="nav-moe" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition-all">
+          <i class="fa-solid fa-building-columns w-5 text-center text-blue-500"></i>
+          <span>MOE & School Portals</span>
+        </button>
+
+        <button onclick="switchTab('video')" id="nav-video" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition-all">
+          <i class="fa-solid fa-play-circle w-5 text-center text-rose-500"></i>
+          <span>Video Coming Soon</span>
+        </button>
+
+        <button onclick="switchTab('game')" id="nav-game" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition-all">
+          <i class="fa-solid fa-gamepad w-5 text-center text-amber-500"></i>
+          <span>Game Coming Soon</span>
+        </button>
+      </nav>
+
+      <!-- Motivational Quote Sidebar Widget -->
+      <div class="bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-2xl p-5 shadow-md relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+        <div class="flex items-center space-x-2 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-seedling"></i>
+          <span>Mindset Matters</span>
+        </div>
+        <p id="sidebar-quote" class="text-sm font-medium leading-relaxed italic text-indigo-100 mb-3">
+          "Your marks measure where you are today, not how far you can grow tomorrow."
+        </p>
+        <div class="flex justify-between items-center text-xs text-indigo-200 border-t border-white/10 pt-3">
+          <span class="font-semibold">Growth Mindset</span>
+          <button onclick="cycleQuote()" class="hover:text-white transition-colors flex items-center space-x-1">
+            <i class="fa-solid fa-rotate"></i>
+            <span>New Quote</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="lg:col-span-9 space-y-6">
+
+      <!-- TAB: HOME OVERVIEW -->
+      <section id="tab-home" class="tab-content space-y-6">
+        
+        <!-- Welcome Hero Banner -->
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+          <div class="relative z-10 max-w-2xl">
+            <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-3 tracking-wide">
+              🌟 An Ai Tong School SLC-CMPS Initiative
+            </span>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-3 leading-tight">
+              Grow Beyond Grades
+            </h2>
+            <p class="text-emerald-100 text-sm sm:text-base mb-6 leading-relaxed">
+              Welcome to your dedicated resource hub! Discover secondary pathway exploration tools, official MOE platforms, interactive coding projects, and inspiring video resources designed for upper primary students.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <button onclick="switchTab('moe')" class="px-4 py-2.5 rounded-xl bg-white text-emerald-800 font-semibold text-xs sm:text-sm hover:bg-emerald-50 transition-all shadow-md">
+                Explore MOE Portals
+              </button>
+              <button onclick="switchTab('video')" class="px-4 py-2.5 rounded-xl bg-emerald-800/60 hover:bg-emerald-800/80 text-white font-semibold text-xs sm:text-sm transition-all border border-white/20">
+                Watch Video
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Resource Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Card 1 -->
+          <div onclick="switchTab('moe')" class="cursor-pointer bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-brand-500 hover:shadow-md transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <h3 class="font-heading font-bold text-slate-800 text-base mb-1 group-hover:text-brand-600 transition-colors">MOE Portals</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Direct links to SLS, PSLE details, and Secondary SchoolFinder.</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div onclick="switchTab('video')" class="cursor-pointer bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-brand-500 hover:shadow-md transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-play"></i>
+            </div>
+            <h3 class="font-heading font-bold text-slate-800 text-base mb-1 group-hover:text-brand-600 transition-colors">Video Coming Soon</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Watch our custom student video series created specifically for this project.</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div onclick="switchTab('game')" class="cursor-pointer bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-brand-500 hover:shadow-md transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <h3 class="font-heading font-bold text-slate-800 text-base mb-1 group-hover:text-brand-600 transition-colors">Game Coming Soon</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Play our interactive Scratch game designed for upper primary learning.</p>
+          </div>
+        </div>
+
+        <!-- Big Growth Mindset Card -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+              💡
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-slate-900 text-lg">Remember: Success is More Than a Number</h3>
+              <p class="text-slate-500 text-xs">Growth, character, and curiosity define your true potential.</p>
+            </div>
+          </div>
+          <blockquote id="main-quote-box" class="p-4 bg-slate-50 rounded-xl border-l-4 border-amber-500 text-slate-700 italic text-sm leading-relaxed mb-4">
+            "Your marks show your current progress in a subject, but they never define your intelligence, your character, or what you can achieve in the future."
+          </blockquote>
+          <div class="flex justify-end">
+            <button onclick="cycleQuote()" class="text-xs font-semibold text-brand-600 hover:text-brand-700 flex items-center space-x-1">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Read Another Quote</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: MOE & SCHOOL PORTALS -->
+      <section id="tab-moe" class="tab-content hidden space-y-6">
+        <div>
+          <h2 class="font-heading text-2xl font-bold text-slate-900">MOE & Official Portals</h2>
+          <p class="text-slate-500 text-sm">Direct links to official Singapore Ministry of Education resources and learning portals.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- SLS -->
+          <a href="https://vle.learning.moe.edu.sg" target="_blank" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-blue-500 hover:shadow-md transition-all flex items-start space-x-4 group">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg group-hover:scale-105 transition-transform">
+              SLS
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-slate-900 text-base group-hover:text-blue-600">Singapore Student Learning Space</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-blue-600"></i>
+              </div>
+              <p class="text-slate-500 text-xs mt-1">Access your online learning modules, assignments, and curriculum resources.</p>
+            </div>
+          </a>
+
+          <!-- PSLE Info -->
+          <a href="https://www.moe.gov.sg/post-secondary/admissions/psle" target="_blank" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-teal-500 hover:shadow-md transition-all flex items-start space-x-4 group">
+            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-lg group-hover:scale-105 transition-transform">
+              PSLE
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-slate-900 text-base group-hover:text-teal-600">MOE PSLE Portal</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-teal-600"></i>
+              </div>
+              <p class="text-slate-500 text-xs mt-1">Official guidelines on scoring, achievement levels (ALs), and post-primary options.</p>
+            </div>
+          </a>
+
+          <!-- MOE SchoolFinder -->
+          <a href="https://www.moe.gov.sg/schoolfinder" target="_blank" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all flex items-start space-x-4 group">
+            <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-lg group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-school"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-slate-900 text-base group-hover:text-purple-600">MOE SchoolFinder</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-purple-600"></i>
+              </div>
+              <p class="text-slate-500 text-xs mt-1">Explore secondary schools by subject offerings, CCAs, location, and special programmes.</p>
+            </div>
+          </a>
+
+          <!-- ECG TickTalk -->
+          <a href="https://www.moe.gov.sg/education-in-sg/educational-career-guidance" target="_blank" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-amber-500 hover:shadow-md transition-all flex items-start space-x-4 group">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-slate-900 text-base group-hover:text-amber-600">ECG TickTalk Video Series</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-amber-600"></i>
+              </div>
+              <p class="text-slate-500 text-xs mt-1">Education & Career Guidance resources to help you explore strengths, passions, and pathways.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- TAB: VIDEO COMING SOON -->
+      <section id="tab-video" class="tab-content hidden space-y-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-700 text-xs font-bold uppercase tracking-wider">Video Coming Soon</span>
+          <h2 class="font-heading text-2xl font-bold text-slate-900 mt-2">Custom Video Resource</h2>
+          <p class="text-slate-500 text-sm">Watch the custom video created for this initiative once loaded.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200">
+          <div class="aspect-video w-full rounded-xl bg-slate-900 overflow-hidden shadow-inner flex items-center justify-center relative">
+            <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/tgbNymZ7vqY" title="YouTube Video" frameborder="0" allow="accelerometer; autoplay; clipboardwrite; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="mt-4 flex justify-between items-center">
+            <p class="text-xs text-slate-500">Need to update this video? Click "Update Links" in the top bar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: GAME COMING SOON -->
+      <section id="tab-game" class="tab-content hidden space-y-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-md bg-amber-100 text-amber-700 text-xs font-bold uppercase tracking-wider">Game Coming Soon</span>
+          <h2 class="font-heading text-2xl font-bold text-slate-900 mt-2">Scratch Coding Game</h2>
+          <p class="text-slate-500 text-sm">Interactive Scratch game created for learning and exploration.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200">
+          <div class="aspect-[4/3] max-w-2xl mx-auto w-full rounded-xl bg-slate-100 overflow-hidden border border-slate-300 shadow-inner flex items-center justify-center">
+            <iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/10128407/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen class="max-w-full"></iframe>
+          </div>
+          <div class="mt-4 text-center">
+            <p class="text-xs text-slate-500">Need to update this Scratch project? Click "Update Links" in the top navigation bar.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+      <p class="font-semibold text-slate-700">Grow Beyond Grades — An Ai Tong School SLC-CMPS Initiative</p>
+      <p class="mt-1">Designed for Upper Primary Students (P4, P5, P6)</p>
+    </div>
+  </footer>
+
+  <!-- MODAL 1: UPDATE LINKS MODAL -->
+  <div id="modal-links" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <h3 class="font-heading font-bold text-lg text-slate-900">Update Media Links</h3>
+        <button onclick="closeLinkModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">YouTube Video Embed Link</label>
+          <input type="text" id="input-video-url" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500 outline-none" placeholder="https://www.youtube.com/embed/YOUR_ID">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Scratch Game Embed Link</label>
+          <input type="text" id="input-scratch-url" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500 outline-none" placeholder="https://scratch.mit.edu/projects/YOUR_ID/embed">
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-2 pt-2">
+        <button onclick="closeLinkModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">Cancel</button>
+        <button onclick="saveCustomLinks()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white hover:bg-brand-700 shadow-sm">Save Links</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: QR CODE PROMO MODAL -->
+  <div id="modal-qr" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <h3 class="font-heading font-bold text-base text-slate-900">Website Promo QR Code</h3>
+        <button onclick="closeQrModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <p class="text-xs text-slate-500">Scan this QR code to open the site. You can print this QR code now—updates made later will automatically work!</p>
+
+      <div class="flex justify-center py-2">
+        <div id="qrcode-container" class="p-3 bg-white border border-slate-200 rounded-2xl shadow-sm"></div>
+      </div>
+
+      <div class="flex justify-center space-x-2">
+        <button onclick="window.print()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 shadow-sm flex items-center space-x-1">
+          <i class="fa-solid fa-print"></i>
+          <span>Print Flyer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(el => {
+        el.classList.remove('bg-brand-50', 'text-brand-700');
+        el.classList.add('text-slate-600');
+      });
+
+      const activeTab = document.getElementById('tab-' + tabId);
+      const activeNav = document.getElementById('nav-' + tabId);
+
+      if (activeTab) activeTab.classList.remove('hidden');
+      if (activeNav) {
+        activeNav.classList.add('bg-brand-50', 'text-brand-700');
+        activeNav.classList.remove('text-slate-600');
+      }
+    }
+
+    // Dynamic Motivational Quotes
+    const quotes = [
+      "Your marks measure where you are today, not how far you can grow tomorrow.",
+      "Success is built on curiosity, effort, resilience, and kindness—not just test scores.",
+      "Mistakes are proof that you are trying and learning something new.",
+      "Believe in your potential. Progress over perfection every single day!",
+      "Your worth as a student comes from your heart, your character, and your unique strengths."
+    ];
+    let quoteIdx = 0;
+
+    function cycleQuote() {
+      quoteIdx = (quoteIdx + 1) % quotes.length;
+      document.getElementById('sidebar-quote').innerText = quotes[quoteIdx];
+      document.getElementById('main-quote-box').innerText = quotes[quoteIdx];
+    }
+
+    // Modal Handlers
+    function openLinkModal() {
+      document.getElementById('modal-links').classList.remove('hidden');
+    }
+    function closeLinkModal() {
+      document.getElementById('modal-links').classList.add('hidden');
+    }
+
+    function saveCustomLinks() {
+      const vid = document.getElementById('input-video-url').value.trim();
+      const scratch = document.getElementById('input-scratch-url').value.trim();
+
+      if (vid) document.getElementById('video-iframe').src = vid;
+      if (scratch) document.getElementById('scratch-iframe').src = scratch;
+
+      closeLinkModal();
+      alert('Links updated successfully!');
+    }
+
+    // QR Code Handler
+    let qrGenerated = false;
+    function openQrModal() {
+      document.getElementById('modal-qr').classList.remove('hidden');
+      if (!qrGenerated) {
+        const qrContainer = document.getElementById('qrcode-container');
+        qrContainer.innerHTML = '';
+        new QRCode(qrContainer, {
+          text: window.location.href || "https://example.com",
+          width: 180,
+          height: 180
+        });
+        qrGenerated = true;
+      }
+    }
+    function closeQrModal() {
+      document.getElementById('modal-qr').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
